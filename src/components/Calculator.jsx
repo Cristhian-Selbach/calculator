@@ -23,13 +23,13 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.ADD_DIGIT:
       return {
         ...state,
-        currentOperand: `${currentOperand || ""}${payload.digit}`,
+        currentOperand: `${state.currentOperand || ""}${payload.digit}`,
       };
   }
 };
 
 export default function Calculator() {
-  const [{ currentOperand, previousOperand, operation }] = useReducer(
+  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
     reducer,
     {}
   );
@@ -38,7 +38,9 @@ export default function Calculator() {
     <>
       <div className="carcass">
         <div className="visor">
-          <div className="previus-operand">{previousOperand}</div>
+          <div className="previus-operand">
+            {previousOperand} {operation}
+          </div>
           <div className="current-operand">
             <div className="result-equals">=</div>
             {currentOperand}
@@ -63,15 +65,15 @@ export default function Calculator() {
           <button className="operations">
             <FontAwesomeIcon icon={faXmark} />
           </button>
-          <DigitButton />
-          <button className="numbers">8</button>
-          <button className="numbers">9</button>
+          <DigitButton digit={7} dispatch={dispatch} />
+          <DigitButton digit={8} dispatch={dispatch} />
+          <DigitButton digit={9} dispatch={dispatch} />
           <button className="operations">
             <FontAwesomeIcon icon={faMinus} />
           </button>
-          <button className="numbers">4</button>
-          <button className="numbers">5</button>
-          <button className="numbers">6</button>
+          <DigitButton digit={4} dispatch={dispatch} />
+          <DigitButton digit={5} dispatch={dispatch} />
+          <DigitButton digit={6} dispatch={dispatch} />
           <div className="vertical-high">
             <button className="operations plus">
               <FontAwesomeIcon icon={faPlus} />
@@ -80,9 +82,9 @@ export default function Calculator() {
               <FontAwesomeIcon icon={faEquals} />
             </button>
           </div>
-          <button className="numbers">1</button>
-          <button className="numbers">2</button>
-          <button className="numbers">3</button>
+          <DigitButton digit={1} dispatch={dispatch} />
+          <DigitButton digit={2} dispatch={dispatch} />
+          <DigitButton digit={3} dispatch={dispatch} />
           <button className="horizontal-high numbers">0</button>
           <button className="numbers">.</button>
         </div>
