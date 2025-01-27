@@ -8,16 +8,40 @@ import {
   faEquals,
   faDeleteLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import DigitButton from "./DigitButton";
+import { useReducer } from "react";
+export const ACTIONS = {
+  ADD_DIGIT: "add-digit",
+  CHOOSE_OPERATION: "choose-operation",
+  CLEAR: "clear",
+  DELETE_DIGIT: "delete-digit",
+  EVALUETE: "evaluete",
+};
+
+const reducer = (state, { type, payload }) => {
+  switch (type) {
+    case ACTIONS.ADD_DIGIT:
+      return {
+        ...state,
+        currentOperand: `${currentOperand || ""}${payload.digit}`,
+      };
+  }
+};
 
 export default function Calculator() {
+  const [{ currentOperand, previousOperand, operation }] = useReducer(
+    reducer,
+    {}
+  );
+
   return (
     <>
       <div className="carcass">
         <div className="visor">
-          <div className="previus-operand">123</div>
+          <div className="previus-operand">{previousOperand}</div>
           <div className="current-operand">
             <div className="result-equals">=</div>
-            112121+3211111111111111111111113
+            {currentOperand}
           </div>
         </div>
 
@@ -39,7 +63,7 @@ export default function Calculator() {
           <button className="operations">
             <FontAwesomeIcon icon={faXmark} />
           </button>
-          <button className="numbers">7</button>
+          <DigitButton />
           <button className="numbers">8</button>
           <button className="numbers">9</button>
           <button className="operations">
