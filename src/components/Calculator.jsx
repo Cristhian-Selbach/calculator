@@ -1,4 +1,13 @@
 import "../styles/calculator.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus,
+  faMinus,
+  faXmark,
+  faDivide,
+  faEquals,
+  faDeleteLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Calculator() {
   return (
@@ -21,19 +30,31 @@ export default function Calculator() {
 
         <div className="calculator-grid">
           <button className="remove">Ac</button>
-          <button className="remove">del</button>
-          <button className="operations">÷</button>
-          <button className="operations">*</button>
+          <button className="remove">
+            <FontAwesomeIcon icon={faDeleteLeft} />
+          </button>
+          <button className="operations">
+            <FontAwesomeIcon icon={faDivide} />
+          </button>
+          <button className="operations">
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
           <button className="numbers">7</button>
           <button className="numbers">8</button>
           <button className="numbers">9</button>
-          <button className="operations">-</button>
+          <button className="operations">
+            <FontAwesomeIcon icon={faMinus} />
+          </button>
           <button className="numbers">4</button>
           <button className="numbers">5</button>
           <button className="numbers">6</button>
           <div className="vertical-high">
-            <button className="operations plus">+</button>
-            <button className="equal">=</button>
+            <button className="operations plus">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button className="equal">
+              <FontAwesomeIcon icon={faEquals} />
+            </button>
           </div>
           <button className="numbers">1</button>
           <button className="numbers">2</button>

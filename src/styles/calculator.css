@@ -71,9 +71,17 @@ button {
   cursor: pointer;
   outline: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 500;
   border-radius: 16px;
   height: 62px;
+  transition: 0.1s cubic-bezier(0.64, 0.56, 0.92, 0.16);
+}
+button:hover {
+  color: #303136;
+  background-color: #a6a8a1;
+  transform: scale(1.07);
+  transition: 0.2s cubic-bezier(0.64, 0.56, 0.92, 0.16);
 }
 
 .utilities {
@@ -94,6 +102,7 @@ button {
 .numbers {
   background-color: #303136;
   color: #29a8ff;
+  font-size: 32px;
 }
 
 .equal {
