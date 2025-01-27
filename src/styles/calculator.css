@@ -35,7 +35,7 @@
   justify-content: center;
 }
 .visor .previus-operand {
-  font-size: 20px;
+  font-size: 24px;
   color: #818181;
 }
 .visor .current-operand {
@@ -43,7 +43,7 @@
   position: relative;
   width: 100%;
   overflow-x: auto;
-  font-size: 40px;
+  font-size: 48px;
   color: #fff;
   scrollbar-width: none;
 }

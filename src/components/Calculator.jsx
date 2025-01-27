@@ -9,7 +9,9 @@ import {
   faDeleteLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import DigitButton from "./DigitButton";
+import OperationButton from "./OperationButton";
 import { useReducer } from "react";
+
 export const ACTIONS = {
   ADD_DIGIT: "add-digit",
   CHOOSE_OPERATION: "choose-operation",
@@ -59,25 +61,17 @@ export default function Calculator() {
           <button className="remove">
             <FontAwesomeIcon icon={faDeleteLeft} />
           </button>
-          <button className="operations">
-            <FontAwesomeIcon icon={faDivide} />
-          </button>
-          <button className="operations">
-            <FontAwesomeIcon icon={faXmark} />
-          </button>
+          <OperationButton operation={"divide"} dispatch={dispatch} />
+          <OperationButton operation={"multiple"} dispatch={dispatch} />
           <DigitButton digit={7} dispatch={dispatch} />
           <DigitButton digit={8} dispatch={dispatch} />
           <DigitButton digit={9} dispatch={dispatch} />
-          <button className="operations">
-            <FontAwesomeIcon icon={faMinus} />
-          </button>
+          <OperationButton operation={"minus"} dispatch={dispatch} />
           <DigitButton digit={4} dispatch={dispatch} />
           <DigitButton digit={5} dispatch={dispatch} />
           <DigitButton digit={6} dispatch={dispatch} />
           <div className="vertical-high">
-            <button className="operations plus">
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
+            <OperationButton operation={"plus"} dispatch={dispatch} />
             <button className="equal">
               <FontAwesomeIcon icon={faEquals} />
             </button>
@@ -85,8 +79,8 @@ export default function Calculator() {
           <DigitButton digit={1} dispatch={dispatch} />
           <DigitButton digit={2} dispatch={dispatch} />
           <DigitButton digit={3} dispatch={dispatch} />
-          <button className="horizontal-high numbers">0</button>
-          <button className="numbers">.</button>
+          <DigitButton digit={0} dispatch={dispatch} />
+          <DigitButton digit={"."} dispatch={dispatch} />
         </div>
       </div>
     </>
