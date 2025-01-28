@@ -30,9 +30,64 @@ const reducer = (state, { type, payload }) => {
         ...state,
         currentOperand: `${state.currentOperand || ""}${payload.digit}`,
       };
+    case ACTIONS.CHOOSE_OPERATION:
+      if (!state.currentOperand && !state.previousOperand) return state;
+      if (state.operation === payload.operation && !state.currentOperand)
+        return state;
+      if (!state.currentOperand && state.operation !== payload.operation) {
+        return {
+          ...state,
+          operation: payload.operation,
+        };
+      }
+      if (state.previousOperand == null) {
+        return {
+          ...state,
+          operation: payload.operation,
+          previousOperand: state.currentOperand,
+          currentOperand: null,
+        };
+      }
+      return {
+        ...state,
+        previousOperand: evaluate(state),
+        operation: payload.operation,
+        currentOperand: null,
+      };
     case ACTIONS.CLEAR:
       return {};
   }
+};
+
+const evaluate = ({ currentOperand, previousOperand, operation }) => {
+  const previous = parseFloat(previousOperand);
+  const current = parseFloat(currentOperand);
+
+  if (isNaN(previous) || isNaN(current)) return "";
+  let computation;
+  console.log(currentOperand, previousOperand, operation);
+  switch (operation) {
+    case "plus":
+      computation = previous + current;
+      break;
+    case "minus":
+      computation = previous - current;
+      break;
+    case "multiple":
+      computation = previous * current;
+      break;
+    case "divide":
+      computation = previous / current;
+      break;
+  }
+
+  return computation.toString();
+};
+const operationIcon = {
+  plus: <FontAwesomeIcon icon={faPlus} size="sm" />,
+  minus: <FontAwesomeIcon icon={faMinus} size="sm" />,
+  multiple: <FontAwesomeIcon icon={faXmark} size="sm" />,
+  divide: <FontAwesomeIcon icon={faDivide} size="sm" />,
 };
 
 export default function Calculator() {
@@ -46,7 +101,7 @@ export default function Calculator() {
       <div className="carcass">
         <div className="visor">
           <div className="previus-operand">
-            {previousOperand} {operation}
+            ㅤ{previousOperand} {operationIcon[operation]}
           </div>
           <div className="current-operand">
             <div className="result-equals">=</div>
