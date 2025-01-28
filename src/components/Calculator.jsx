@@ -23,10 +23,15 @@ export const ACTIONS = {
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
+      if (state.currentOperand == 0 && payload.digit == 0) return state;
+      if (state.currentOperand?.includes(".") && payload.digit === ".")
+        return state;
       return {
         ...state,
         currentOperand: `${state.currentOperand || ""}${payload.digit}`,
       };
+    case ACTIONS.CLEAR:
+      return {};
   }
 };
 
@@ -57,7 +62,14 @@ export default function Calculator() {
         </div>
 
         <div className="calculator-grid">
-          <button className="remove">Ac</button>
+          <button
+            className="remove"
+            onClick={() => {
+              dispatch({ type: ACTIONS.CLEAR });
+            }}
+          >
+            Ac
+          </button>
           <button className="remove">
             <FontAwesomeIcon icon={faDeleteLeft} />
           </button>
