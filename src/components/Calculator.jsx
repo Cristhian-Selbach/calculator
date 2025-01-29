@@ -23,8 +23,18 @@ export const ACTIONS = {
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
+      if (state.overwrite) {
+        return {
+          ...state,
+          currentOperand: payload.digit,
+          overwrite: false,
+        };
+      }
       if (state.currentOperand == 0 && payload.digit == 0) return state;
-      if (state.currentOperand?.includes(".") && payload.digit === ".")
+      if (
+        state.currentOperand?.toString().includes(".") &&
+        payload.digit === "."
+      )
         return state;
       return {
         ...state,
@@ -53,6 +63,18 @@ const reducer = (state, { type, payload }) => {
         previousOperand: evaluate(state),
         operation: payload.operation,
         currentOperand: null,
+      };
+    case ACTIONS.EVALUETE:
+      console.log(state.currentOperand, state.previous, state.operation);
+      if (!state.currentOperand || !state.previousOperand || !state.operation) {
+        return state;
+      }
+      return {
+        ...state,
+        currentOperand: evaluate(state),
+        operation: null,
+        previousOperand: null,
+        overwrite: true,
       };
     case ACTIONS.CLEAR:
       return {};
@@ -91,10 +113,8 @@ const operationIcon = {
 };
 
 export default function Calculator() {
-  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
-    reducer,
-    {}
-  );
+  const [{ currentOperand, previousOperand, operation, overwrite }, dispatch] =
+    useReducer(reducer, {});
 
   return (
     <>
@@ -139,7 +159,10 @@ export default function Calculator() {
           <DigitButton digit={6} dispatch={dispatch} />
           <div className="vertical-high">
             <OperationButton operation={"plus"} dispatch={dispatch} />
-            <button className="equal">
+            <button
+              className="equal"
+              onClick={() => dispatch({ type: ACTIONS.EVALUETE })}
+            >
               <FontAwesomeIcon icon={faEquals} />
             </button>
           </div>
