@@ -76,6 +76,27 @@ const reducer = (state, { type, payload }) => {
         previousOperand: null,
         overwrite: true,
       };
+    case ACTIONS.DELETE_DIGIT:
+      if (state.overwrite) {
+        return {
+          ...state,
+          overwrite: false,
+          currentOperand: null,
+        };
+      }
+      if (!state.currentOperand) {
+        return state;
+      }
+      if (state.currentOperand.lenght === 1) {
+        return {
+          ...state,
+          currentOperand: null,
+        };
+      }
+      return {
+        ...state,
+        currentOperand: state.currentOperand.slice(0, -1),
+      };
     case ACTIONS.CLEAR:
       return {};
   }
@@ -113,8 +134,10 @@ const operationIcon = {
 };
 
 export default function Calculator() {
-  const [{ currentOperand, previousOperand, operation, overwrite }, dispatch] =
-    useReducer(reducer, {});
+  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
+    reducer,
+    {}
+  );
 
   return (
     <>
@@ -145,7 +168,12 @@ export default function Calculator() {
           >
             Ac
           </button>
-          <button className="remove">
+          <button
+            className="remove"
+            onClick={() => {
+              dispatch({ type: ACTIONS.DELETE_DIGIT });
+            }}
+          >
             <FontAwesomeIcon icon={faDeleteLeft} />
           </button>
           <OperationButton operation={"divide"} dispatch={dispatch} />
